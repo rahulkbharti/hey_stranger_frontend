@@ -3,7 +3,7 @@
  *  There is no commonets 
  **************************************************/
 
-let server = "http://localhost:3000";
+let server = "https://heystranger-services.azurewebsites.net";
 const socket = io(server);
 
 // socket.emit('offer', offer, id, (response) => {
