@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeyStranger.live | Stranger Video Calling App</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <link rel="stylesheet" href="./css/indexcss.css">
+    <link rel="stylesheet" href="./css/likes.css">
+    <link rel="stylesheet" href="./css/main.css">
+
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <img src="./img/logo2.png" alt="Logo">
+                <!-- <h1>HeyStranger.live</h1> -->
+            </div>
+            <div class="middle-info">
+                <!-- Additional content or information can go here if needed -->
+                Talk To Stanger!
+            </div>
+            <div class="info">
+                <span id="total-users" style="font-size:14px;color: blue; cursor: pointer;">500+ online users</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <p>
+            You don't need an app to use HeyStranger on your phone or tablet! The site works well on mobile devices.
+        </p>
+        <p>HeyStranger is a great way to meet new people. When you use HeyStranger, we randomly select another person and chat with you one-on-one. To ensure your security, chats are anonymous unless you tell someone who you are (not recommended!) and you can end the chat at any time. Predators have been known to use HeyStranger, so be careful. </p>
+        <p>You can add your interests if you want and HeyStranger will find people who share your interests rather than completely random people.</p>
+        <p style="font-size: small; font-weight: 800;">
+            <input type="checkbox" name="terms" id="terms"> Your use of HeyStranger constitutes your acceptance of these .<a
+                href="./terms-condition.html">Terms and Conditions</a>.
+        </p>
+        <div class="intrests-form">
+            <div class="multiple-tags-input">
+                <h3>What do you talk about?</h3>
+                <div class="tags-input">
+                    <div class="tags-list"></div>
+                    <input type="text" class="tag-input-field" placeholder="Type and press enter to add tags">
+                </div>
+            </div>
+            <div class="start-chating">
+                <h3>Start Chat</h3>
+                <div class="buttons-groups">
+                    <!-- <a href="./chat.html?mode=chat"><button>Text</button></a>
+                    <p>Or</p>
+                    <a href="./chat.html"><button>Video</button></a> -->
+                    <button type="button" onclick="StartChating('text')">Text</button>
+                    <p>Or</p>
+                    <button type="button" onclick="StartChating('video')">Video</button>
+                </div>
+            </div>
+        </div>
+        <p><small>
+            This Services Agreement (“Agreement” or “Terms”) constitutes a legal contract between you and HeyStranger.live, LLC (“HeyStranger”, “us” or “our”). By accessing or using the HeyStranger website currently located at HeyStranger.live (the “Site”) or any applications or other services provided or operated by HeyStranger (collectively, the “Services”), you may indicate your acceptance of such services by clicking on the following icon: check box By using the or button you confirm that you have read, understood and agree to be bound by these terms. If you do not agree to these Terms, please do not access or use the Services.
+            </small></p>
+        <!-- 
+        <table>
+            <tr>
+                <th>Socket Status :</th>
+                <td id="socket-status">----</td>
+            </tr>
+            <tr>
+                <th>Partner Status :</th>
+                <td id="wait-for-partner">----</td>
+            </tr>
+            <tr>
+                <th>Connection State :</th>
+                <td id="connection-state">----</td>
+            </tr>
+            <tr>
+                <th>ICE Connection State :</th>
+                <td id="ice-connection-state">----</td>
+            </tr>
+            <tr>
+                <th>ICE Gathering State :</th>
+                <td id="ice-gathering-state">----</td>
+            </tr>
+            <tr>
+                <th>Signaling State :</th>
+                <td id="signaling-state">----</td>
+            </tr>
+        </table> -->
+
+
+        <!-- 
+        <div class="multiple-tags-input">
+            <h3>Likes:</h3>
+            <div class="tags-input">
+                <div class="tags-list"></div>
+                <input type="text" class="tag-input-field" placeholder="Type and press enter to add tags">
+            </div>
+        </div> -->
+
+    </div>
+    <script>
+        // // Fetching additional data from the server
+        // window.onload = () =>{
+        //     fetch('http://localhost:3000/getusers')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             // Accessing and displaying the additional data
+        //             document.getElementById('total-users').textContent = data.totalusers+1 + ' online users';
+        //         })
+        //         .catch(error => console.error('Error fetching data:', error));
+        // }
+    </script>
+    <script>
+
+
+        const likes = [];
+        const StartChating = (mode) => {
+            const terms = document.getElementById('terms');
+            if (!terms.checked) {
+                alert("Please accept terms and conditions");
+                return;
+            }
+            var modeParam = encodeURIComponent(mode);
+            var arrayParam = encodeURIComponent(JSON.stringify(likes));
+            window.location.href = "test4.html?mode=" + modeParam + "&tags=" + arrayParam;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const tagInputField = document.querySelector('.tag-input-field');
+            const tagsList = document.querySelector('.tags-list');
+            if (!tagInputField || !tagsList) {
+                console.log("No tag input field found");
+                return;
+            }
+            tagInputField.addEventListener('keydown', function (event) {
+                const tagText = event.target.value.trim();
+
+                if (event.key === 'Enter' && tagText !== '') {
+                    if (!likes.includes(tagText)) {
+                        const tag = document.createElement('div');
+                        tag.className = 'tag';
+                        tag.innerHTML = `
+                        <span>${tagText}</span>
+                        <span class="tag-close-btn">&times;</span>
+                    `;
+                        likes.push(tagText);
+                        tagsList.appendChild(tag);
+                        event.target.value = '';
+                    } else {
+                        alert("already exists");
+                    }
+                }
+            });
+
+            tagsList.addEventListener('click', function (event) {
+                if (event.target.classList.contains('tag-close-btn')) {
+                    const tagText = event.target.previousElementSibling.textContent.trim();
+                    const index = likes.indexOf(tagText);
+                    if (index !== -1) {
+                        likes.splice(index, 1);
+                    }
+                    event.target.parentElement.remove();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

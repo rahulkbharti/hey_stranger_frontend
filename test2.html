@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call with Chat</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .controls button {
+            margin-right: 10px;
+            padding: 5px 10px;
+            border: none;
+            background-color: #555;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 60px); /* Adjust height according to header size */
+        }
+
+        #videoContainer {
+            flex-grow: 1;
+            background-color: #ccc; /* Placeholder color for video feed */
+            position: relative;
+        }
+
+        #videoContainer.video-with-chat {
+            height: calc(100% - 200px); /* Adjust height when chat is visible */
+        }
+
+        #chatContainer {
+            height: 150px; /* Initial height of chat container */
+            background-color: #f2f2f2;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            transition: height 0.3s ease-in-out;
+        }
+
+        #messageInput {
+            flex-grow: 1;
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #sendButton {
+            padding: 5px 10px;
+            border: none;
+            background-color: #555;
+            color: #fff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>John Doe</h1>
+        <div class="controls">
+            <button id="muteButton">Mute</button>
+            <button id="videoButton">Video</button>
+            <button id="endButton">End Call</button>
+        </div>
+    </header>
+    <main>
+        <div id="videoContainer">
+            <!-- Video feed goes here -->
+            <video id="videoFeed" autoplay muted style="width: 100%; height: 100%;"></video>
+        </div>
+        <div id="chatContainer">
+            <!-- Chat messages go here -->
+            <input type="text" id="messageInput" placeholder="Type a message...">
+            <button id="sendButton">Send</button>
+        </div>
+    </main>
+
+    <script>
+        // JavaScript code to handle functionality like muting, sending messages, etc.
+        // This code would involve handling user actions and updating the UI accordingly.
+
+        // Example functionality for sending a message
+        document.getElementById('sendButton').addEventListener('click', function() {
+            var messageInput = document.getElementById('messageInput');
+            var message = messageInput.value;
+            if (message.trim() !== '') {
+                // Add code to send the message to the other participant
+                appendMessage('You', message); // Example: append the sent message to the chat
+                messageInput.value = ''; // Clear the input field
+            }
+        });
+
+        // Example function to append a message to the chat container
+        function appendMessage(sender, message) {
+            var chatContainer = document.getElementById('chatContainer');
+            var messageElement = document.createElement('div');
+            messageElement.textContent = sender + ': ' + message;
+            chatContainer.appendChild(messageElement);
+            // Scroll to the bottom of the chat container to show the latest message
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Check available height and adjust layout if necessary
+        function checkAvailableHeight() {
+            var windowHeight = window.innerHeight;
+            var videoContainer = document.getElementById('videoContainer');
+            var chatContainer = document.getElementById('chatContainer');
+            if (windowHeight < 400) {
+                videoContainer.classList.add('video-with-chat');
+                chatContainer.style.height = '200px'; // Adjust chat container height
+            } else {
+                videoContainer.classList.remove('video-with-chat');
+                chatContainer.style.height = '150px'; // Default chat container height
+            }
+        }
+
+        // Call the function initially and on window resize
+        checkAvailableHeight();
+        window.addEventListener('resize', checkAvailableHeight);
+    </script>
+</body>
+</html>

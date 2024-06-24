@@ -1,0 +1,57 @@
+.multiple-tags-input{
+    margin:10px 0;
+}
+.multiple-tags-input h3{
+    margin: 0 0 10px;
+    padding: 0;
+}
+.multiple-tags-input .tags-input {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    width: 300px;
+  }
+
+  .multiple-tags-input .tag-input-field {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .multiple-tags-input .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px 0;
+  }
+
+  .multiple-tags-input .tag {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 3px;
+    padding: 2px 10px;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+  }
+
+  .multiple-tags-input .tag:hover {
+    background-color: #0056b3;
+  }
+
+  .multiple-tags-input .tag-close-btn {
+    cursor: pointer;
+    margin-left: 5px;
+    font-weight: bold;
+  }
+
+  .multiple-tags-input .tag-close-btn:hover {
+    color: #ff0000;
+  }

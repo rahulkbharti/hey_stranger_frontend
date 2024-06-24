@@ -1,0 +1,320 @@
+:root{
+  --height: 80vh;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f3f3;
+  color: #333;
+}
+
+/* Container styles */
+.container {
+  /* max-width: 800px; */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main {
+  display: flex; 
+  flex-direction: column; justify-content:space-evenly;
+}
+#video-containers{
+  width: 100%; 
+  margin-right: 10px;
+}
+
+
+/* Video styles */
+video {
+  background-color: #000;
+  /* width: 320px;
+  height: 240px; */
+  /* width: 640px;
+  height: 480px; */
+  height: 35vh;
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: block;
+}
+
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  text-align: left;
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+/* Chat box styles */
+.chat-box {
+  /* display: ; */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-bottom: 20px;
+  height: var(--height);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.chat-box-header {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border-radius: 5px 5px 0 0;
+}
+
+.chat-box-header h3 {
+  margin: 0;
+}
+
+.chat-box-body {
+  padding: 10px;
+  max-height: 80%;
+  overflow-y: scroll;
+  box-sizing: border-box;
+}
+
+.chat-message {
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+.chat-box-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  border-radius: 0 0 5px 5px;
+}
+
+#is-typing {
+  font-style: italic;
+  color: #777;
+}
+
+#message-input {
+  width: calc(100% - 80px);
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin-right: 5px;
+  font-size: 16px;
+}
+
+#send-btn {
+  padding: 10px 14px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#send-btn:hover {
+  background-color: #555;
+}
+
+/* Tags input styles */
+.multiple-tags-input {
+  margin-bottom: 20px;
+}
+
+.tags-input {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+
+.tag {
+  background-color: #f2f2f2;
+  padding: 3px 7px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+.tag-remove {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.tag-input-field {
+  border: none;
+  outline: none;
+  background: transparent;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.tag-input-field:focus {
+  border: 1px solid #777;
+}
+
+/* Button styles */
+
+button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+/* Styling for the local video container */
+.local-video-container {
+  position: relative;
+  width: 100%;
+  /* Adjust width as needed */
+}
+
+/* Styling for the mute buttons */
+#mute-audio,
+#mute-video {
+  position: absolute;
+  bottom: 10px;
+  /* Adjust vertical position as needed */
+  right: 10px;
+  /* Adjust horizontal position as needed */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  z-index: 1;
+  margin-right: 10px;
+  /* Ensure buttons are above the video */
+}
+
+#mute-audio {
+  right: 100px;
+}
+
+/* Optional: Hover effect for buttons */
+#mute-audio:hover,
+#mute-video:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  /* Semi-transparent background on hover */
+  color: black;
+}
+
+/* Styling for the local video container */
+.remote-video-container {
+  position: relative;
+  width: 100%;
+  /* Adjust width as needed */
+}
+
+/* Styling for the text */
+.remote-video-container h4 {
+  margin:0;
+  position: absolute;
+  bottom: 10px;
+  /* Adjust vertical position as needed */
+  right: 10px;
+  /* Adjust horizontal position as needed */
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Semi-transparent background */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  z-index: 1;
+  margin-right: 10px;
+  /* Ensure buttons are above the video */
+}
+
+.header {
+  background-color: #f2f2f2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adding box shadow */
+}
+
+.header .header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 20px;
+}
+
+.logo img {
+  max-width: 200px; /* Adjust the max-width as needed */
+  cursor: pointer;
+}
+.logo h1{
+  font-size: 22px;
+  margin: 0;
+  padding: 0;
+}
+
+.middle-info {
+  font-size: small;
+  /* flex-grow: 6; Allow this div to take up remaining space */
+}
+
+.info p {
+  margin: 0;
+}
+
+
+
+/* Default styles for all screen sizes */
+.container {
+  width: 100%;
+}
+
+/* Styles for screens smaller than 768px (e.g., smartphones) */
+@media (max-width: 767px) {
+  .container {
+    width: 90%; /* Adjusting width for smaller screens */
+  }
+}
+
+/* Styles for screens between 768px and 991px (e.g., tablets) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .container {
+    width: 80%; /* Adjusting width for medium-sized screens */
+  }
+}
+
+/* Styles for screens larger than 992px (e.g., desktops) */
+@media (min-width: 992px) {
+  .container {
+    width: 70%; /* Adjusting width for larger screens */
+  }
+}

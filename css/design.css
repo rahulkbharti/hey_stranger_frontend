@@ -1,0 +1,146 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* The mobile-first pre-defined media queries: */
+
+/* xs */
+/* @media (min-width: 475px) {} */
+
+/* sm */
+/* @media (min-width: 640px) {} */
+
+/* md */
+/* @media (min-width: 768px) {} */
+
+/* lg */
+/* @media (min-width: 1024px) {} */
+
+/* xl */
+/* @media (min-width: 1280px) {} */
+/* Mobile container utility class: */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    /* padding-left: 0.5rem;
+    padding-right: 0.5rem; */
+    /* background-color: blue; */
+}
+
+#local-video {
+    width: 160px;
+}
+
+/* hiding the Header if Hieght is less than */
+
+@media screen and (max-height:500px) {
+    /* header{
+       display: none;
+    } */
+    .video-container{
+       position: fixed;
+       top:0;
+       left: 0;
+       right:0;
+       display:none;
+    }
+    .container{
+       width: 100%;
+       padding: 0;
+    }
+}
+
+
+
+/* xs */
+@media (min-width: 475px) {
+    .container {
+        max-width: 475px;
+    }
+}
+
+/* sm */
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+    }
+}
+
+/* md */
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
+    }
+
+   .chat-box{
+      max-height: 400px;
+   }
+   #local-video {
+       position: static;
+   }
+   .video-container{
+    display: block;
+   }
+}
+
+/* lg */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px;
+    }
+
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    #local-video {
+        width: 240px;
+    }
+}
+
+/* xl */
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+/* 2xl */
+@media (min-width: 1536px) {
+    .container {
+        max-width: 1536px;
+    }
+}
+
+
+/* hiding the Header if Hieght is less than */
+
+@media screen and (max-height:500px) {
+     /* header{
+        display: none;
+     } */
+     .video-container{
+        position: fixed;
+        top:0;
+        left: 0;
+        right:0;
+        display:none;
+     }
+     .container{
+        width: 100%;
+        padding: 0;
+     }
+}
