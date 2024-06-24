@@ -54,7 +54,7 @@ const getPartner = (interests) => {
         // Handle timeout if acknowledgment is not received within 5 seconds
         setTimeout(() => {
             reject(new Error('Timeout: Acknowledgment not received within 5 seconds'));
-        }, 5000);
+        }, 30000);
     });
 };
 // Function to send 'candidate' event with acknowledgment and handle timeout
