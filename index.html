@@ -14,7 +14,18 @@
     <link rel="stylesheet" href="./css/indexcss.css">
     <link rel="stylesheet" href="./css/likes.css">
     <link rel="stylesheet" href="./css/main.css">
-
+    <style>
+        #username{
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            font-size: 16px;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,7 +37,7 @@
             </div>
             <div class="middle-info">
                 <!-- Additional content or information can go here if needed -->
-                Talk To Stanger!
+                Talk To Stranger!
             </div>
             <div class="info">
                 <span id="total-users" style="font-size:14px;color: blue; cursor: pointer;">500+ online users</span>
@@ -45,7 +56,11 @@
                 href="./terms-condition.html">Terms and Conditions</a>.
         </p>
         <div class="intrests-form">
-            <div class="multiple-tags-input">
+            <div class="multiple-tags-input" style="padding: 10px">
+                <h3>Name:</h3>
+                <input type="text" id="username" placeholder="Not Recomended..." >
+            </div>
+            <div class="multiple-tags-input" style="margin-right:10px">
                 <h3>What do you talk about?</h3>
                 <div class="tags-input">
                     <div class="tags-list"></div>
@@ -64,75 +79,29 @@
                 </div>
             </div>
         </div>
-        <p><small>
+        <p>
+            <small>
             This Services Agreement (“Agreement” or “Terms”) constitutes a legal contract between you and HeyStranger.live, LLC (“HeyStranger”, “us” or “our”). By accessing or using the HeyStranger website currently located at HeyStranger.live (the “Site”) or any applications or other services provided or operated by HeyStranger (collectively, the “Services”), you may indicate your acceptance of such services by clicking on the following icon: check box By using the or button you confirm that you have read, understood and agree to be bound by these terms. If you do not agree to these Terms, please do not access or use the Services.
-            </small></p>
-        <!-- 
-        <table>
-            <tr>
-                <th>Socket Status :</th>
-                <td id="socket-status">----</td>
-            </tr>
-            <tr>
-                <th>Partner Status :</th>
-                <td id="wait-for-partner">----</td>
-            </tr>
-            <tr>
-                <th>Connection State :</th>
-                <td id="connection-state">----</td>
-            </tr>
-            <tr>
-                <th>ICE Connection State :</th>
-                <td id="ice-connection-state">----</td>
-            </tr>
-            <tr>
-                <th>ICE Gathering State :</th>
-                <td id="ice-gathering-state">----</td>
-            </tr>
-            <tr>
-                <th>Signaling State :</th>
-                <td id="signaling-state">----</td>
-            </tr>
-        </table> -->
-
-
-        <!-- 
-        <div class="multiple-tags-input">
-            <h3>Likes:</h3>
-            <div class="tags-input">
-                <div class="tags-list"></div>
-                <input type="text" class="tag-input-field" placeholder="Type and press enter to add tags">
-            </div>
-        </div> -->
-
+            </small>
+        </p>
     </div>
-    <script>
-        // // Fetching additional data from the server
-        // window.onload = () =>{
-        //     fetch('http://localhost:3000/getusers')
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             // Accessing and displaying the additional data
-        //             document.getElementById('total-users').textContent = data.totalusers+1 + ' online users';
-        //         })
-        //         .catch(error => console.error('Error fetching data:', error));
-        // }
-    </script>
-    <script>
 
-
+    <script>
+        // Setup the type of connection snd sending the data from one to another page.
         const likes = [];
-        const StartChating = (mode) => {
-            const terms = document.getElementById('terms');
-            if (!terms.checked) {
-                alert("Please accept terms and conditions");
-                return;
+        const StartChating = (mode)=> {
+            const username = document.getElementById("username").value;
+            const interests = likes;
+            localStorage.setItem("username", username);
+            localStorage.setItem("interests", interests);
+            localStorage.setItem("type", mode);
+            if (mode === "text") {
+                window.location.href = "./textChat.html";
+            } else {
+                window.location.href = "./videoChat.html";
             }
-            var modeParam = encodeURIComponent(mode);
-            var arrayParam = encodeURIComponent(JSON.stringify(likes));
-            window.location.href = "test4.html?mode=" + modeParam + "&tags=" + arrayParam;
         }
-
+        // Like handler and there is no connection to other.
         document.addEventListener('DOMContentLoaded', function () {
             const tagInputField = document.querySelector('.tag-input-field');
             const tagsList = document.querySelector('.tags-list');

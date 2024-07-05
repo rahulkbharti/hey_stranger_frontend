@@ -7,6 +7,35 @@
   <title>HeyStranger.live | Stranger Video Calling App</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
    <link rel="stylesheet" href="./css/test.css">
+    <style>
+        .start-chating{
+            text-align: center;
+        }
+        .buttons-groups{
+            display: flex;
+            flex-direction: column;
+            padding: 0 50px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+        .buttons-groups button{
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+            width: 150px;
+        }
+        @media (min-width: 650px){
+            .buttons-groups{
+                flex-direction: row;
+                /*background-color: red;*/
+            }
+            .buttons-groups button{
+                width: 250px;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
@@ -56,7 +85,18 @@
               <div class="bottom-sheet-content">
                 <div class="chat-container">
                   <div class="chat" id="chat">
-                     <div class="message" style="color: #FFF;">Click On Left Button or ESC Button to connect.</div class="message">
+                      <div class="start-chating">
+                          <h3>Start Chat</h3>
+                          <div class="buttons-groups">
+                              <!-- <a href="./chat.html?mode=chat"><button>Text</button></a>
+                              <p>Or</p>
+                              <a href="./chat.html"><button>Video</button></a> -->
+                              <button type="button" onclick="StartChating('text')">Text</button>
+                              <p>Or</p>
+                              <button type="button" onclick="StartChating('video')">Video</button>
+                          </div>
+                      </div>
+
                   </div>
                   <div style="padding: 0px 20px; display: flex;">
                     <div id="esc-main-text">Click to connect</div>
@@ -139,8 +179,12 @@
       <script type="module" src="./js/elements.js"></script>
       <script type="module" src="./js/elements.js"></script>
       <script type="module" src="./js/stream.js"></script> -->
-      <script src="./js/ui.js" type="module"></script>
-      <script src="./js/main.js" type="module"></script>
+      <script>
+         if(localStorage.getItem("mode") === "text"){
+             document.getElementById("video-container").style.display ="none";
+             document.getElementById("chat-container").style.height ='100%';
+         }
+      </script>
      
 </body>
 

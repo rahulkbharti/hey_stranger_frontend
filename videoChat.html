@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeyStranger.live | Stranger Video Calling App</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./css/test.css">
+    <style>
+        .start-chating{
+            text-align: center;
+        }
+        .buttons-groups{
+            display: flex;
+            flex-direction: column;
+            padding: 0 50px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+        }
+        .buttons-groups button{
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+            width: 150px;
+        }
+        /*@media (min-width: 650px){*/
+        /*    .buttons-groups{*/
+        /*        flex-direction: row;*/
+        /*        !*background-color: red;*!*/
+        /*    }*/
+        /*    .buttons-groups button{*/
+        /*        width: 250px;*/
+        /*    }*/
+        /*}*/
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="logo">
+            <a href="\"><img width="34px" src="./img/log4.png" alt="Logo">
+                <h2>HeyStranger</h2></a>
+        </div>
+        <nav>
+            Talk To Stragers and Make Them Friend.
+            <!-- <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul> -->
+        </nav>
+        <div class="menu-toggle" id="total-users">5k+ users</div>
+    </div>
+</header>
+<div class="mobile">
+    <div class="container">
+        <div class="video-container" id="video-container">
+            <!-- <video id="remote-video" src="./res/video2.mp4"  playsinline+ controls></video> -->
+            <div class="local-video-container">
+                <video id="local-video" playsinline+ muted autoplay></video>
+            </div>
+            <div class="remote-video-container">
+                <video id="remote-video" playsinline+ autoplay></video>
+            </div>
+
+            <!-- <img width="100%" id="remote-video" src="./img/image.png" alt=""> -->
+            <!-- <video id="local-video" src="./res/video2.mp4"  playsinline+ muted></video> -->
+
+            <div class="controls">
+                <button id="mute-button"><i class="material-icons icon">mic_off</i></button>
+                <button id="video-button"><i class="material-icons icon">videocam</i></button>
+            </div>
+        </div>
+
+        <div class="chat-container">
+            <div class="bottom-sheet" id="bottomSheet">
+                <div class="handle-bar" onmousedown="startDrag(event)"></div> <!-- Handle bar -->
+                <!-- Content of the bottom sheet -->
+                <div class="bottom-sheet-content">
+                    <div class="chat-container">
+                        <div class="chat" id="chat">
+                            <div class="start-chating">
+                                <h3>Start Chat</h3>
+                                <div class="buttons-groups">
+                                    <!-- <a href="./chat.html?mode=chat"><button>Text</button></a>
+                                    <p>Or</p>
+                                    <a href="./chat.html"><button>Video</button></a> -->
+                                    <span>Want to switch to </span>
+                                    <button type="button" onclick="StartChatting('text')">Text Chat</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div style="padding: 0px 20px; display: flex;">
+                            <div id="esc-main-text">Click to connect</div>
+                            <!-- <div class="message-info">
+                                <button>Text</button>
+                                or
+                                <button> Video</button>
+                            </div> -->
+                            <div class="typing-info" id="is-typing">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="input-container">
+                            <button id="end_button">Closed</button>
+                            <button id="esc-btn" style="margin-right: 7px; background-color: #ccc;">
+                                <i style="color: #000;" class="material-icons icon">sync</i>
+                            </button>
+                            <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off" disabled>
+                            <button id="send-btn"><i class="material-icons icon">send</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let isDragging = false;
+    let startY, startHeight, currentY, diffY;
+    const bottomSheet = document.getElementById('bottomSheet');
+
+    function startDrag(e) {
+        isDragging = true;
+        startY = e.clientY || e.touches[0].clientY;
+        startHeight = bottomSheet.offsetHeight;
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', stopDrag);
+        e.preventDefault(); // Prevent default mouse behavior
+    }
+
+    function drag(e) {
+        if (!isDragging) return;
+        currentY = e.clientY || e.touches[0].clientY;
+        diffY = startY - currentY;
+        const newHeight = startHeight + diffY;
+        if (newHeight >= 100) { // Adjust minimum height as needed
+            bottomSheet.style.height = `${newHeight}px`;
+            // let chatbody = document.getElementById("chat");
+            // chatbody.style.height = `${newHeight - 500}px`;
+        }
+    }
+
+    function stopDrag() {
+        isDragging = false;
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('mouseup', stopDrag);
+    }
+
+    // Automatically open the bottom sheet when the page loads
+    window.onload = function () {
+        bottomSheet.classList.add('show-bottom-sheet');
+    };
+
+    // window.onresize = () => {
+    //   let chatBody = document.getElementById("chat");
+    //   if(window.innerHeight < 500){
+    //     chatBody.style.height = window.innerHeight - 400 +"px";
+    //     bottomSheet.style.height = window.innerHeight - 180+"px";
+    //   }else{
+    //     bottomSheet.style.height = window.innerHeight - 300 +"px";
+    //     chatBody.style.height = window.innerHeight - 400 + "px";
+    //   }
+
+    //   chatBody.scrollTop = chatBody.scrollHeight;
+    // }
+</script>
+<!--Main Js-->
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script src="./js/socket.js" type="module"></script>
+<script src="./js/ui.js" type="module"></script>
+<script >
+
+    function StartChatting(){
+        localStorage.setItem("type","text");
+        window.location.href = './textChat.html';
+    }
+</script>
+<script type="module">
+
+</script>
+</body>
+
+</html>
