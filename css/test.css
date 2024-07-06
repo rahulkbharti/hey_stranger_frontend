@@ -366,7 +366,7 @@ video {
 .bottom-sheet {
     position: fixed;
     /* border-radius: 20px 20px 0 0; */
-    bottom: -100%;
+    /*bottom: -100%;*/
     /* Start hidden */
     left: 0;
     width: 100%;

@@ -66,15 +66,10 @@
                 <!-- Content of the bottom sheet -->
                 <div class="bottom-sheet-content">
                     <div class="chat-container">
-                        <div class="chat" id="chat">
+                        <div class="chat" id="chat" style="">
                             <div class="start-chating">
                                 <h3>Start Chat</h3>
                                 <div class="buttons-groups">
-                                    <!-- <a href="./chat.html?mode=chat"><button>Text</button></a>
-                                    <p>Or</p>
-                                    <a href="./chat.html"><button>Video</button></a> -->
-<!--                                    <button type="button" onclick="StartChating('text')">Text</button>-->
-<!--                                    <p>Or</p>-->
                                     <span>Want to switch to </span>
                                     <button type="button" onclick="StartChatting('video')">Video Chat</button>
                                 </div>
@@ -82,18 +77,17 @@
 
                         </div>
                         <div style="padding: 0px 20px; display: flex;">
-                            <div id="esc-main-text">Click to connect</div>
+<!--                            <div id="esc-main-text">Click to connect</div>-->
                             <!-- <div class="message-info">
                                 <button>Text</button>
                                 or
                                 <button> Video</button>
                             </div> -->
                             <div class="typing-info" id="is-typing">
-                                &nbsp;
+                                &nbsp;Connect
                             </div>
                         </div>
                         <div class="input-container">
-                            <button id="end_button">Closed</button>
                             <button id="esc-btn" style="margin-right: 7px; background-color: #ccc;">
                                 <i style="color: #000;" class="material-icons icon">sync</i>
                             </button>
@@ -159,7 +153,8 @@
     // }
 </script>
 
-<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<!--<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>-->
+<script src="./socket.io.min.js"></script>
 <script src="./js/socket.js" type="module"></script>
 <script src="./js/ui.js" type="module"></script>
 

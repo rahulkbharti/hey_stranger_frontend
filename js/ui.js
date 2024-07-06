@@ -1,13 +1,15 @@
+
+// Modules Imports
 import {
-    sendAnswer,
     getMatch,
     onMatch,
     onNoMatch,
     onError,
     sendOffer,
     onOffer,
-    onIceCandidate,
+    sendAnswer,
     onAnswer,
+    onIceCandidate,
     hangUp,
     onHangup,
 } from "./socket.js";
@@ -19,13 +21,19 @@ import {
 import {
     createDataChannel,
     setupDataChannelHandlers,
-    sendMessage,
     closeDataChannel
 } from "./dataChannel.js";
+// DOM access
+import { connectDisconnectButton,typingIndicator} from "./doms.js";
+
 // GLOBAL VARIABLE DECLARATIONS
 let otherSide = null;
 let localStream = null;
 let candidateQueue = [];
+let isConnected  = false;
+const setIsConnected = (value)=>{
+    isConnected = value;
+}
 // Initialize media stream
 async function init() {
     try {
@@ -59,6 +67,7 @@ onMatch(async ({ roomId, user, type }) => {
 });
 onNoMatch((message) => console.log(message));
 onError((error) => console.log(error));
+
 onOffer(async (offer) => {
     console.log("An Offer is Received:", offer);
     await handleOffer(offer);
@@ -95,6 +104,7 @@ onHangup(() => {
 });
 // Connection Listener End
 
+
 const chat = document.getElementById("chat");
 const DataChannelOperations = {
     onOpen: () => {
@@ -112,6 +122,7 @@ const DataChannelOperations = {
     },
     onError: (error) => console.error("Data channel error:", error),
 }
+
 const startCall = async ({ roomId, user, type }) => {
     try {
         const peerConnection = await createPeerConnection(otherSide, localStream);
@@ -135,6 +146,7 @@ const handleOffer = async (offer) => {
         await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
+
         sendAnswer(answer, otherSide);
         // Add queued ICE candidates
         while (candidateQueue.length) {
@@ -154,39 +166,43 @@ window.onload = ()=>{
     }
 };
 
-document.getElementById("esc-btn").onclick = () => {
-    // const usernameInput = document.getElementById("username");
-    // const interestsInput = document.getElementById("interests");
-    const chatType = localStorage.getItem("type");
-    // const username = usernameInput.value.trim();
-    // const interests = interestsInput.value.trim().split(",").map((i) => i.trim());
-    const username = localStorage.getItem("username");
-    const interests = localStorage.getItem('interests');
-    if (username) {
-        getMatch({username, interests,chatType});
-    }
-};
+// Connection : Connect/Disconnect button
+if(connectDisconnectButton){
+    connectDisconnectButton.onclick = ()=>{
+        // if(!getMatch()) console.error({message:"There is problem in getMatch import.",module:"dataChannel"});
+        if(!isConnected){
+            const chatType = localStorage.getItem("type");
+            const username = localStorage.getItem("username");
+            const interests = localStorage.getItem('interests');
+            if(getMatch){
+                getMatch({username, interests,chatType});
+                typingIndicator.innerHTML = "Connecting...";
+            }
+        }
+        else{
 
-document.getElementById("end_button").onclick = () => {
-    if (otherSide !== null) {
-        hangUp(otherSide);
-        closePeerConnection(otherSide);
-        console.log("Connection Closed");
-        otherSide = null;
-        closeDataChannel();
-    } else {
-        console.log("Connect it first...");
-    }
-};
+            let x =  window.confirm("Want to really Disconnect.");
+            if(!x){
+                return;
+            }
 
-let message = document.getElementById("message-input");
-document.getElementById("send-btn").onclick =()=>{
-    const chat = document.getElementById("chat");
-        chat.innerHTML+=`<div class="message sent">
-                <div class="message-text">${message.value}</div>
-              </div>`;
-        sendMessage(message.value);
-        message.value ="";
+            if (otherSide !== null) {
+                hangUp(otherSide);
+                closePeerConnection(otherSide);
+                console.log("Connection Closed");
+                otherSide = null;
+                closeDataChannel();
+            } else {
+                console.log("Connect it first...");
+            }
+        }
+    }
+}
+else{
+    console.error({
+        message:"The connection button id is not matched/Found.",
+        module:"dataChannel"
+    })
 }
 
-export {getMatch};
+export {setIsConnected};

@@ -1,7 +1,8 @@
 
-
 import { sendIceCandidate } from './socket.js';
 import { getStream } from "./stream.js";
+// DOM access
+import { remoteVideo } from "./doms.js";
 
 const peerConnections = {};
 
@@ -20,10 +21,18 @@ const createPeerConnection = async(userId, localStream)=> {
     // Handle remote stream
     peerConnection.ontrack = (event) => {
         try{
-            const remoteVideo = document.getElementById('remote-video');
-            remoteVideo.srcObject = event.streams[0];
-            remoteVideo.autoplay = true;
-            // remoteVideo.id = userId;
+            if(remoteVideo){
+                remoteVideo.srcObject = event.streams[0];
+                remoteVideo.autoplay = true;
+                // remoteVideo.id = userId;
+            }else{
+                console.error({
+                    message:"remoteVideoElement Not Found/Matched.",
+                    module:"webrtc"
+                })
+            }
+
+
         }
         catch (e){
 
@@ -62,17 +71,17 @@ function closePeerConnection(userId) {
         peerConnection.onsignalingstatechange = null;
         peerConnection.onnegotiationneeded = null;
 
-        peerConnection.getSenders().forEach(sender => {
-            if (sender.track) {
-                sender.track.stop();
-            }
-        });
-
-        peerConnection.getReceivers().forEach(receiver => {
-            if (receiver.track) {
-                receiver.track.stop();
-            }
-        });
+        // peerConnection.getSenders().forEach(sender => {
+        //     if (sender.track) {
+        //         sender.track.stop();
+        //     }
+        // });
+        //
+        // peerConnection.getReceivers().forEach(receiver => {
+        //     if (receiver.track) {
+        //         receiver.track.stop();
+        //     }
+        // });
 
 
 
