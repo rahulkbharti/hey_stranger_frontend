@@ -59,7 +59,7 @@
     font-weight: 400;
     src: url(./material-icons.woff2) format('woff2');
   }
-  
+
   .material-icons {
     font-family: 'Material Icons';
     font-weight: normal;
@@ -364,22 +364,22 @@ video {
   *************************/
 
 .bottom-sheet {
-    position: fixed;
+    /*position: fixed;*/
     /* border-radius: 20px 20px 0 0; */
     /*bottom: -100%;*/
     /* Start hidden */
-    left: 0;
+    /*left: 0;*/
     width: 100%;
-    height: 52vh;
-    max-height: calc(100% - 50px);
+    /*height: 52vh;*/
+    /*max-height: calc(100% - 50px);*/
     /* Set maximum height to prevent overflowing */
     color: var(--light-color);
     transition: bottom 0.3s ease-out;
     /* Animation effect */
-    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+    /*box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);*/
     /* Optional: Add shadow */
     overflow-y: auto;
-    z-index: 999;
+    /*z-index: 999;*/
     /* Enable vertical scrolling if content exceeds height */
     background-color: var(--dark-color);
 }
@@ -429,7 +429,7 @@ video {
     /* flex: 1; */
     overflow-y: auto;
     padding: 10px;
-    height: 35vh;
+    height: calc(100vh - 175px);
     /* max-height: calc(100% - 20px); */
 }
 
@@ -445,7 +445,7 @@ video {
     position: absolute;
     top:100%;
     bottom:7px;
-    margin-top: 5px; 
+    margin-top: 5px;
     color: var(--light-color);
 } */
 .received {

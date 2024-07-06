@@ -1,10 +1,5 @@
-/*************************************************
- * 
- *  Refacered Components if Components not found then there is no error
- *************************************************/
-
-
-import {localVideo, remoteVideo,muteAudioButton,muteVideoButton} from "./elements.js";
+// DOM access
+import { localVideo, muteAudioButton, muteVideoButton } from "./doms.js";
 
 const getStream = async () => {
     let localStream;
@@ -28,7 +23,7 @@ const getStream = async () => {
         },
     };
     try{
-         localStream = await navigator.mediaDevices.getUserMedia(configuration);
+        localStream = await navigator.mediaDevices.getUserMedia({video:true,audio:false});
     } catch (e) {
         console.error("Error Getting User Media", e);
         alert("Please allow the camera and microphone access for video call access");
@@ -38,9 +33,9 @@ const getStream = async () => {
     let isAudioMuted = true;
     let isVideoMuted = false;
 
-    // Video Audio Mutting/Unmutting
+    // Video Audio Muting/Unmuting
     if (localStream) {
-        localVideo?.style && (localVideo.style.transform = 'scaleX(-1)');
+        // localVideo?.style && (localVideo.style.transform = 'scaleX(-1)');
         // const muteAudioButton = document.getElementById("mute-audio");
         // const muteVideoButton = document.getElementById("mute-video");
         if (muteAudioButton) {
@@ -49,17 +44,12 @@ const getStream = async () => {
                 track.enabled = false;
             });
             muteAudioButton.addEventListener("click", () => {
-
                 if (!localStream) return;
-
-
                 if (audioTracks.length === 0) return;
-
                 isAudioMuted = !isAudioMuted;
                 audioTracks.forEach(track => {
                     track.enabled = !isAudioMuted;
                 });
-
                 muteAudioButton.innerHTML = isAudioMuted ? '<i class="material-icons icon">mic_off</i>' : '<i class="material-icons icon">mic</i>';
             });
         }
@@ -82,15 +72,5 @@ const getStream = async () => {
     }
     return localStream;
 }
-const HandleRemoteStream = (stream) => {
-    // const remoteVideo = document.getElementById("remote-video");
-    if (remoteVideo) {
-        remoteVideo.style.transform = 'scaleX(-1)';
-        remoteVideo.srcObject = stream;
-        remoteVideo.onloadedmetadata = () => {
-            remoteVideo.play();
-        }
-    }
-}
 
-export { getStream, HandleRemoteStream }
+export { getStream };

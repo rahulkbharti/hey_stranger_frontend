@@ -1,123 +1,50 @@
-/*************************************************
- * Refactered
- *  There is no commonets 
- **************************************************/
 
-let server = "https://heystranger-services.azurewebsites.net/";
-const socket = io(server);
-
-// socket.emit('offer', offer, id, (response) => {
-//     if (response.status === 'ok') {
-//         console.log('Offer Sent Successfully');
-//     } else {
-//         console.error('Error Sending Offer');
-//     }
-// });
+// Need <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> in header to use io
+const socket = io("https://heystranger-services-new.azurewebsites.net");
+//const socket = io("http://localhost:3000");
+// Socket Listeners and Caller
+const getMatch = (userData) => socket.emit("match", userData);
+const onMatch = (callback) => socket.on("match", callback);
+const onNoMatch = (callback) => socket.on("noMatch", callback);
+const onError = (callback) => socket.on("error", callback);
+const hangUp = (toSocketId) => socket.emit("hangUp", toSocketId);
+const onHangup = (callback) => socket.on("hangUp", callback);
 
 
-const UpdateSocketStatus = (status) => {
-    const socketStatus = document.getElementById("socket-status");
-    if (socketStatus) {
-        if (status == "Connected") {
-            socketStatus.textContent = `${status} to server , ID is:(${socket.id})`;
-        }
-        else {
-            socketStatus.textContent = `${status} to server`;
-        }
+// WebRTCPeerConnection Callers:
+// Callers
+const sendOffer = (offer, toSocketId) => socket.emit('offer', offer, toSocketId);
+const sendAnswer = (answer, toSocketId) => socket.emit('answer', answer, toSocketId);
+const sendIceCandidate = (candidate, toSocketId) => socket.emit('iceCandidate', candidate, toSocketId);
 
-    }
-};
-socket.on("connect", () => {
-    console.log("Connected to server");
-    UpdateSocketStatus("Connected");
-});
-socket.on("disconnect", () => {
-    console.log("Disconnected from server");
-    UpdateSocketStatus("Disconnected");
-});
-socket.on("reconnect", () => {
-    console.log("Reconnected to server");
-    UpdateSocketStatus("Reconnected");
-});
-socket.on("error", (error) => {
-    console.error("Error:", error);
-    UpdateSocketStatus("Error");
-});
-
-
-const getPartner = (interests) => {
-    return new Promise((resolve, reject) => {
-        socket.emit('getPartner', interests, (response) => {
-            resolve(response);
-        });
-
-        // Handle timeout if acknowledgment is not received within 5 seconds
-        setTimeout(() => {
-            reject(new Error('Timeout: Acknowledgment not received within 5 seconds'));
-        }, 30000);
-    });
-};
-// Function to send 'candidate' event with acknowledgment and handle timeout
-const SendCandidate = (candidate, id) => {
-    return new Promise((resolve, reject) => {
-        socket.emit('candidate', candidate, id, (response) => {
-            resolve(response); // Resolve with response from server
-        });
-
-        // Handle timeout if acknowledgment is not received within 1.5 seconds (1500ms)
-        setTimeout(() => {
-            reject(new Error('Timeout: Acknowledgment not received within 1500ms'));
-        }, 1500);
-    });
-};
-
-// Function to send 'offer' event with acknowledgment and handle timeout
-const SendOffer = (offer, id) => {
-    return new Promise((resolve, reject) => {
-        socket.emit('offer', offer, id, (response) => {
-            resolve(response); // Resolve with response from server
-        });
-
-        // Handle timeout if acknowledgment is not received within 1.5 seconds (1500ms)
-        setTimeout(() => {
-            reject(new Error('Timeout: Acknowledgment not received within 1500ms'));
-        }, 1500);
-    });
-};
-
-// Function to send 'answer' event with acknowledgment and handle timeout
-const SendAnswer = (answer, id) => {
-    return new Promise((resolve, reject) => {
-        socket.emit('answer', answer, id, (response) => {
-            resolve(response); // Resolve with response from server
-        });
-
-        // Handle timeout if acknowledgment is not received within 1.5 seconds (1500ms)
-        setTimeout(() => {
-            reject(new Error('Timeout: Acknowledgment not received within 1500ms'));
-        }, 1500);
-    });
-};
-
-// Function to send 'hangup' event with acknowledgment and handle timeout
-const SendHangUP = (message, id) => {
-    return new Promise((resolve, reject) => {
-        socket.emit('hangup', message, id, (response) => {
-            resolve(response); // Resolve with response from server
-        });
-
-        // Handle timeout if acknowledgment is not received within 1.5 seconds (1500ms)
-        setTimeout(() => {
-            reject(new Error('Timeout: Acknowledgment not received within 1500ms'));
-        }, 1500);
-    });
-};
-
-export {
-    socket,
-    getPartner,
-    SendCandidate,
-    SendOffer,
-    SendAnswer,
-    SendHangUP
+// Web RTC Listeners
+const onOffer = (callback) => socket.on("offer", callback);
+const onAnswer = (callback) => socket.on("answer", callback);
+const onIceCandidate = (callback) => socket.on("iceCandidate", callback);
+const removerListeners = () => {
+    socket.removeAllListeners();
+    console.log("all listener removed.");
 }
+export {
+    getMatch,
+    onMatch,
+    onNoMatch,
+    onError,
+    sendOffer,
+    sendAnswer,
+    sendIceCandidate,
+    onOffer,
+    onAnswer,
+    onIceCandidate,
+    hangUp,
+    onHangup,
+    removerListeners
+};
+
+
+
+
+
+
+
+ 
