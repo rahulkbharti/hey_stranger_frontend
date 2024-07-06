@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HeyStranger.live | Stranger Video Calling App</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="./css/test.css">
+    <link rel="stylesheet" href="./css/videoChat.css">
     <style>
         .start-chating{
             text-align: center;
@@ -81,7 +81,7 @@
                 <div class="handle-bar" onmousedown="startDrag(event)"></div> <!-- Handle bar -->
                 <!-- Content of the bottom sheet -->
                 <div class="bottom-sheet-content">
-                    <div class="chat-container">
+                    <div class="chat-containerx">
                         <div class="chat" id="chat">
                             <div class="start-chating">
                                 <h3>Start Chat</h3>
@@ -118,41 +118,41 @@
 </div>
 
 <script>
-    let isDragging = false;
-    let startY, startHeight, currentY, diffY;
-    const bottomSheet = document.getElementById('bottomSheet');
-
-    function startDrag(e) {
-        isDragging = true;
-        startY = e.clientY || e.touches[0].clientY;
-        startHeight = bottomSheet.offsetHeight;
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', stopDrag);
-        e.preventDefault(); // Prevent default mouse behavior
-    }
-
-    function drag(e) {
-        if (!isDragging) return;
-        currentY = e.clientY || e.touches[0].clientY;
-        diffY = startY - currentY;
-        const newHeight = startHeight + diffY;
-        if (newHeight >= 100) { // Adjust minimum height as needed
-            bottomSheet.style.height = `${newHeight}px`;
-            // let chatbody = document.getElementById("chat");
-            // chatbody.style.height = `${newHeight - 500}px`;
-        }
-    }
-
-    function stopDrag() {
-        isDragging = false;
-        document.removeEventListener('mousemove', drag);
-        document.removeEventListener('mouseup', stopDrag);
-    }
-
-    // Automatically open the bottom sheet when the page loads
-    window.onload = function () {
-        bottomSheet.classList.add('show-bottom-sheet');
-    };
+    // let isDragging = false;
+    // let startY, startHeight, currentY, diffY;
+    // const bottomSheet = document.getElementById('bottomSheet');
+    //
+    // function startDrag(e) {
+    //     isDragging = true;
+    //     startY = e.clientY || e.touches[0].clientY;
+    //     startHeight = bottomSheet.offsetHeight;
+    //     document.addEventListener('mousemove', drag);
+    //     document.addEventListener('mouseup', stopDrag);
+    //     e.preventDefault(); // Prevent default mouse behavior
+    // }
+    //
+    // function drag(e) {
+    //     if (!isDragging) return;
+    //     currentY = e.clientY || e.touches[0].clientY;
+    //     diffY = startY - currentY;
+    //     const newHeight = startHeight + diffY;
+    //     if (newHeight >= 100) { // Adjust minimum height as needed
+    //         bottomSheet.style.height = `${newHeight}px`;
+    //         // let chatbody = document.getElementById("chat");
+    //         // chatbody.style.height = `${newHeight - 500}px`;
+    //     }
+    // }
+    //
+    // function stopDrag() {
+    //     isDragging = false;
+    //     document.removeEventListener('mousemove', drag);
+    //     document.removeEventListener('mouseup', stopDrag);
+    // }
+    //
+    // // Automatically open the bottom sheet when the page loads
+    // window.onload = function () {
+    //     bottomSheet.classList.add('show-bottom-sheet');
+    // };
 
     // window.onresize = () => {
     //   let chatBody = document.getElementById("chat");
@@ -168,7 +168,7 @@
     // }
 </script>
 <!--Main Js-->
-<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script src="./socket.io.min.js"></script>
 <script src="./js/socket.js" type="module"></script>
 <script src="./js/ui.js" type="module"></script>
 <script >

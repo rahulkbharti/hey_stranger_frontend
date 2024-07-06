@@ -158,13 +158,13 @@ const handleOffer = async (offer) => {
     }
 };
 
-window.onload = ()=>{
-    if(localStorage.getItem("type") === "video"){
-        init().then(() => {
-
-        })
-    }
-};
+// window.onload = ()=>{
+//     if(localStorage.getItem("type") === "video"){
+//         init().then(() => {
+//
+//         })
+//     }
+// };
 
 // Connection : Connect/Disconnect button
 if(connectDisconnectButton){
