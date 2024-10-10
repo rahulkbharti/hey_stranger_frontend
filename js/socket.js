@@ -2,7 +2,7 @@
 // const socket = io("https://heystranger-services-new.azurewebsites.net");
 // const socket = io("http://192.168.43.121:3000");
 
-const socket = io("http://localhost:3000");
+const socket = io("https://heystranger-backend.azurewebsites.net");
 // Socket Listeners and Caller
 const getMatch = (userData) => socket.emit("match", userData);
 const onMatch = (callback) => socket.on("match", callback);
