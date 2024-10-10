@@ -83,6 +83,7 @@
                                 or
                                 <button> Video</button>
                             </div> -->
+                            <p id="demo"></p>
                             <div class="typing-info" id="is-typing">
                                 &nbsp;Connect
                             </div>
@@ -93,7 +94,6 @@
                             </button>
                             <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off" disabled>
                             <button id="send-btn"><i class="material-icons icon">send</i></button>
-
                         </div>
                     </div>
                 </div>
@@ -167,7 +167,11 @@
 
     }
 </script>
-<script type="module">
+<script>
+    setInterval(()=>{
+        document.getElementById("demo").innerHTML = `screen width:${screen.width},screen a width:${screen.availWidth}, <br> 
+    screen Height:${screen.height},screen a Height:${screen.height}
+    `},1000);
     // import {sendMessage} from "./js/dataChannel.js";
     // import {getMatch} from "./js/socket.js";
     //
