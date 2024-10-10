@@ -11,7 +11,7 @@ import {
     onAnswer,
     onIceCandidate,
     hangUp,
-    onHangup,
+    onHangup
 } from "./socket.js";
 import {
     createPeerConnection,
@@ -24,14 +24,15 @@ import {
     closeDataChannel
 } from "./dataChannel.js";
 // DOM access
-import { connectDisconnectButton,typingIndicator} from "./doms.js";
+import { connectDisconnectButton, typingIndicator } from "./doms.js";
 
 // GLOBAL VARIABLE DECLARATIONS
 let otherSide = null;
 let localStream = null;
 let candidateQueue = [];
-let isConnected  = false;
-const setIsConnected = (value)=>{
+let isConnected = false;
+let partnerInfo = null;
+const setIsConnected = (value) => {
     isConnected = value;
 }
 // Initialize media stream
@@ -42,12 +43,12 @@ async function init() {
             audio: false,
         });
         const localVideo = document.getElementById("local-video");
-        if(localVideo){
+        if (localVideo) {
             localVideo.srcObject = localStream;
             localVideo.autoplay = true;
             localVideo.muted = true;
         }
-        else{
+        else {
             console.error("check the local-video element id...");
         }
     } catch (error) {
@@ -59,13 +60,41 @@ async function init() {
 onMatch(async ({ roomId, user, type }) => {
     console.log({ roomId, user, type });
     otherSide = user.id;
+    partnerInfo = user;
     if (type === "createAnOffer") {
         await startCall({ roomId, user, type });
     } else {
         // Handle receiving an offer
     }
+    // console.log("Matched with:", user);
 });
-onNoMatch((message) => console.log(message));
+onNoMatch((status) => {
+    console.log(status);
+    if (status.code === 601) {
+        const promt = window.confirm(status.message + " Want to connect Anonymously?");
+        if (promt) {
+            const chatType = localStorage.getItem("type");
+            const username = localStorage.getItem("username");
+            const interests = "";
+            if (getMatch) {
+                getMatch({ username, interests, chatType });
+                typingIndicator.innerHTML = "Connecting Anynomously...";
+            }
+        }
+    }
+    else {
+        const promt = window.confirm(status.message + " Want to Retry?");
+        if (promt) {
+            const chatType = localStorage.getItem("type");
+            const username = localStorage.getItem("username");
+            const interests = localStorage.getItem('interests');
+            if (getMatch) {
+                getMatch({ username, interests, chatType });
+                typingIndicator.innerHTML = "Retrying...";
+            }
+        }
+    }
+});
 onError((error) => console.log(error));
 
 onOffer(async (offer) => {
@@ -102,19 +131,17 @@ onHangup(() => {
         console.log("Connect It First");
     }
 });
-// Connection Listener End
-
 
 const chat = document.getElementById("chat");
 const DataChannelOperations = {
     onOpen: () => {
         console.log("Data channel opened");
         document.getElementById("message-input").disabled = false;
-        chat.innerHTML ="<b>You are connected</b>";
+        chat.innerHTML = "<b>You are connected</b>";
     },
     onClose: () => console.log("Data channel closed"),
     onMessage: (message) => {
-        chat.innerHTML +=`<div class="message received">
+        chat.innerHTML += `<div class="message received">
                 <div class="avatar">S</div>
                 <div class="message-text">${message}</div>
         </div>`;
@@ -167,22 +194,22 @@ const handleOffer = async (offer) => {
 // };
 
 // Connection : Connect/Disconnect button
-if(connectDisconnectButton){
-    connectDisconnectButton.onclick = ()=>{
+if (connectDisconnectButton) {
+    connectDisconnectButton.onclick = () => {
         // if(!getMatch()) console.error({message:"There is problem in getMatch import.",module:"dataChannel"});
-        if(!isConnected){
+        if (!isConnected) {
             const chatType = localStorage.getItem("type");
             const username = localStorage.getItem("username");
             const interests = localStorage.getItem('interests');
-            if(getMatch){
-                getMatch({username, interests,chatType});
+            if (getMatch) {
+                getMatch({ username, interests, chatType });
                 typingIndicator.innerHTML = "Connecting...";
             }
         }
-        else{
+        else {
 
-            let x =  window.confirm("Want to really Disconnect.");
-            if(!x){
+            let x = window.confirm("Want to really Disconnect.");
+            if (!x) {
                 return;
             }
 
@@ -198,11 +225,11 @@ if(connectDisconnectButton){
         }
     }
 }
-else{
+else {
     console.error({
-        message:"The connection button id is not matched/Found.",
-        module:"dataChannel"
+        message: "The connection button id is not matched/Found.",
+        module: "dataChannel"
     })
 }
 
-export {setIsConnected};
+export { setIsConnected, partnerInfo };

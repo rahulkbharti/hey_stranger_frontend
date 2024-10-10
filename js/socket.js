@@ -1,7 +1,9 @@
 
+
 // Need <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> in header to use io
 const socket = io("https://heystranger-services-new.azurewebsites.net");
 //const socket = io("http://localhost:3000");
+
 // Socket Listeners and Caller
 const getMatch = (userData) => socket.emit("match", userData);
 const onMatch = (callback) => socket.on("match", callback);
@@ -40,11 +42,3 @@ export {
     onHangup,
     removerListeners
 };
-
-
-
-
-
-
-
- 
