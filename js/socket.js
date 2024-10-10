@@ -1,5 +1,8 @@
 
-const socket = io("https://heystranger-backend.azurewebsites.net");
+const socket = io('https://heystranger-backend.azurewebsites.net', {
+    withCredentials: true,  // Make sure credentials (cookies) are sent with the request
+    transports: ['websocket', 'polling']
+});
 
 // Socket Listeners and Caller
 const getMatch = (userData) => socket.emit("match", userData);
