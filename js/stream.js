@@ -9,7 +9,7 @@ const getStream = async () => {
             height: { exact: 240 },
             frameRate: { ideal: 30 },
             facingMode: 'user', // or 'user' for front-facing camera
-            aspectRatio: 4/3, // Example aspect ratio constraint
+            aspectRatio: 4 / 3, // Example aspect ratio constraint
             // Add more video constraints as needed
         },
         audio: {
@@ -22,8 +22,8 @@ const getStream = async () => {
             // Add more audio constraints as needed
         },
     };
-    try{
-        localStream = await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+    try {
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
     } catch (e) {
         console.error("Error Getting User Media", e);
         alert("Please allow the camera and microphone access for video call access");

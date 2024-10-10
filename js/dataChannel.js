@@ -7,9 +7,9 @@
  */
 
 // All Module imports
-import { setIsConnected } from "./ui.js";
+import { partnerInfo, setIsConnected } from "./ui.js";
 // All DOM access
-import {chatBody, typingIndicator, messageBox,sendMessageButton } from "./doms.js";
+import { chatBody, typingIndicator, messageBox, sendMessageButton } from "./doms.js";
 
 // GLOBAL Variable
 let dataChannel;
@@ -18,16 +18,16 @@ const createDataChannel = (peerConnection, label = "default") => {
     setupDataChannelHandlers(dataChannel);
     return dataChannel;
 };
-const startMessage = () =>{
+const startMessage = () => {
     let type = "text";
-    if(localStorage.getItem("type") === "text"){
+    if (localStorage.getItem("type") === "text") {
         type = "video";
     }
-    else{
+    else {
         type = "text";
     }
 
-  return  `
+    return `
                              <div class="start-chating">
                                 <h3>Start Chat</h3>
                                 <div class="buttons-groups">
@@ -38,22 +38,27 @@ const startMessage = () =>{
     `
 }
 const setupDataChannelHandlers = (dataChannel_) => {
-    dataChannel =  dataChannel_;
+    dataChannel = dataChannel_;
     dataChannel.onopen = () => {
-            setIsConnected(true);
-            console.log("Data channel opened");
-            messageBox.disabled = false;
-            chatBody.innerHTML ="<div style='margin:15px 0;'><b>You are now connected</b></div>";
-            typingIndicator.innerHTML ="Connected";
+        setIsConnected(true);
+        console.log("Data channel opened");
+        messageBox.disabled = false;
+        chatBody.innerHTML = `<div style='margin:15px 0;'><b>You are now connected with ${partnerInfo.username ? partnerInfo.username : "Unknown"}</b>
+        </div>`;
+        if (partnerInfo.interests.length !== 0) {
+            chatBody.innerHTML += `<div style='margin:15px 0;'><b> ${partnerInfo.username ? partnerInfo.username : "Unknown"} Interests:</b> ${partnerInfo.interests}</div>`;
+        }
+        chatBody.innerHTML += "<div>Say Hi! </div>";
+        typingIndicator.innerHTML = "Connected";
     };
     dataChannel.onclose = () => {
         setIsConnected(false);
         messageBox.disabled = true;
         chatBody.innerHTML += "<div style='margin:15px 0;'><small style='color:red;margin:30px 0;'> Stranger is Disconnected...</small></div>";
-        chatBody.innerHTML+= startMessage();
+        chatBody.innerHTML += startMessage();
         chatBody.scrollTop = chatBody.scrollHeight;
         console.log("Data channel closed");
-        typingIndicator.innerHTML ="Connect";
+        typingIndicator.innerHTML = "Connect";
     };
     dataChannel.onmessage = (e) => {
         console.log("Message:", e.data);
@@ -69,10 +74,10 @@ const setupDataChannelHandlers = (dataChannel_) => {
             }
             else if (data.type === "typing") {
                 if (data.isTyping) {
-                    typingIndicator.textContent = "Stranger is typing...";
+                    typingIndicator.textContent = `${partnerInfo.username ? partnerInfo.username : "Unknown"} is typing...`;
                 }
                 else {
-                    typingIndicator.textContent = "Click to disconnect";
+                    typingIndicator.textContent = "Connected";
                 }
             }
 
@@ -126,36 +131,36 @@ messageBox.addEventListener('input', () => {
 });
 
 // Send message By Button
-if(sendMessageButton){
-    sendMessageButton.onclick =()=>{
-        if(chatBody){
-            chatBody.innerHTML+=`<div class="message sent">
+if (sendMessageButton) {
+    sendMessageButton.onclick = () => {
+        if (chatBody) {
+            chatBody.innerHTML += `<div class="message sent">
                 <div class="message-text">${messageBox.value}</div>
               </div>`;
             chatBody.scrollTop = chatBody.scrollHeight;
             sendMessage(JSON.stringify({ type: "chat", content: messageBox.value }));
-            messageBox.value ="";
+            messageBox.value = "";
             messageBox.focus();
-        }else{
+        } else {
             console.error({
-                message:"chatBody not found",
-                module:'dataChannel'
+                message: "chatBody not found",
+                module: 'dataChannel'
             })
         }
     }
 }
-else{
+else {
     console.error({
-        message:"No Send Button Found.",
-        module:"dataChannel"
+        message: "No Send Button Found.",
+        module: "dataChannel"
     })
 }
 // Send Message by clicking enter button
-if(messageBox) {
+if (messageBox) {
     messageBox.addEventListener('keydown', function (event) {
         const tagText = event.target.value.trim();
         if (event.key === 'Enter' && tagText !== '') {
-            sendMessage(JSON.stringify({type: "chat", content: messageBox.value})); // Assuming dataChannel is defined somewhere
+            sendMessage(JSON.stringify({ type: "chat", content: messageBox.value })); // Assuming dataChannel is defined somewhere
             chatBody.innerHTML += `<div class="message sent">
                 <div class="message-text">${messageBox.value}</div>
               </div>`;
@@ -170,4 +175,4 @@ if(messageBox) {
 
 
 
-export {createDataChannel, setupDataChannelHandlers, closeDataChannel}
+export { createDataChannel, setupDataChannelHandlers, closeDataChannel }
