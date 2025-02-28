@@ -1,5 +1,5 @@
 
-const socket = io('https://heystranger-backend.azurewebsites.net', {
+const socket = io('https://heystranger-backend.onrender.com', {
     withCredentials: true,  // Make sure credentials (cookies) are sent with the request
     transports: ['websocket', 'polling']
 });
